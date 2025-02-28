@@ -4,7 +4,7 @@ include "../../database/connection.php";
 
 $erro = [];
 
- 
+
 if (isset($_POST['confirm'])) {
     if (!isset($_SESSION)) {
         session_start();
@@ -15,7 +15,7 @@ if (isset($_POST['confirm'])) {
 
         if (strlen($_SESSION['name']) == 0) {
             $erro[] = "Preencha o nome.";
-            echo  $erro[] = "Preencha o nome.";
+            echo $erro[] = "Preencha o nome.";
         }
         if (substr_count($_SESSION['email'], '@' != 1 || substr_count($_SESSION['email'], '.' < 1))) {
             $erro[] = "Preencha o email.";
@@ -31,7 +31,7 @@ if (isset($_POST['confirm'])) {
 
         var_dump(count($erro) == 0);
         if (count($erro) == 0) {
-            
+
 
             $password = md5(md5($_SESSION['password']));
 
@@ -44,11 +44,11 @@ if (isset($_POST['confirm'])) {
                     '$_SESSION[email]',
                     '$password'
                 )";
-            $confirm = mysqli_query( $mysqli, $sql_code);
-            if($confirm){
+            $confirm = mysqli_query($mysqli, $sql_code);
+            if ($confirm) {
                 unset($_SESSION["name"], $_SESSION["email"], $_SESSION["password"], $_SESSION["confirm_password"]);
                 echo "<script> location.href='../../index.php?p=home'; </script>";
-            }else{
+            } else {
                 $erro[] = $confirm;
             }
         }
@@ -68,14 +68,14 @@ if (isset($_POST['confirm'])) {
 </head>
 
 <body>
-    <?php 
+    <?php
     if (count($erro) > 0) {
         echo "<div>";
-        foreach ($erro as $value){
+        foreach ($erro as $value) {
             echo ("$value <br>");
         }
         echo "</div>";
-    } 
+    }
     ?>
     <a href="index.php?p=home">voltar</a>
     <section class="vh-100 w-100 align-items-center justify-content-center">
