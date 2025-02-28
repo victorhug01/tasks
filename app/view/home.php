@@ -1,3 +1,1 @@
-<h1>Bem vindo!</h1>
-
-<p>Ola, nome</p>
+<h1>HOME</h1>

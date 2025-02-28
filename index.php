@@ -7,11 +7,11 @@
 </head>
 
 <body>
-    <section class=principal>
+    <section class=main>
         <?php
         if(isset($_GET['p'])){
             $page = $_GET['p'].".php";
-            if(is_file("/app/view/$page")){
+            if(is_file("app/view/$page")){
                 include "app/view/$page";
             }else{
                 include 'configs/not_found_page.php';
