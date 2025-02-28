@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<?php include '../elements/language.php' ?>
+<?php include '../../includes/language.php' ?>
 
 <head>
-    <?php include '../elements/header.php' ?>
+    <?php include '../../includes/header.php' ?>
     <title>Add</title>
 </head>
 
 <body>
     <section class="vh-100 w-100 align-items-center justify-content-center">
-        <?php include '../elements/navbar.php' ?>
+        <?php include '../../includes/navbar.php' ?>
         <form action="" method="post" class="container d-grid gap-2 col-xl-6 col-lg-6">
             <div class="form-group d-grid gap-2">
                 <label for="">Título</label>
@@ -37,7 +37,7 @@
             <div class="form-group d-grid gap-2 mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
                 <textarea class="form-control border border-2 border-dark" id="exampleFormControlTextarea1"
-                    style="resize:none;" placeholder="Maximo de 500 palavras" maxlength="500" rows="5" >
+                    style="resize:none;" placeholder="Maximo de 500 palavras" maxlength="500" rows="5">
                 </textarea>
             </div>
             <div class="form-check">
@@ -54,4 +54,5 @@
 
     </section>
 </body>
+
 </html>
