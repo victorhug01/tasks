@@ -3,47 +3,24 @@
 
 <head>
     <?php include './includes/header.php' ?>
-    <script src="js/open_modal.js"></script>
-    <title>Home</title>
+    <title>cadastro de usuários</title>
 </head>
 
 <body>
-    <section class="vh-100 w-100 align-items-center justify-content-center">
-        <?php include './includes/navbar.php' ?>
-        <div class="container text-center">
-            <div class="row row-cols-1 row-cols-lg-5 row-cols-sm-2 g-2 g-lg-2">
-                <div class="col">
-                    <div class="p-3 bg-primary rounded text-white fw-bolder">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="p-3">Row column</div>
-                </div>
-            </div>
-        </div>
+    <section class=principal>
+        <?php
+        if(isset($_GET['p'])){
+            $page = $_GET['p'].".php";
+            if(is_file("/app/view/$page")){
+                include "app/view/$page";
+            }else{
+                include 'configs/not_found_page.php';
+            }
+        }else{
+            include 'app/view/login_view.php';
+        }
+
+        ?>
     </section>
 </body>
 
