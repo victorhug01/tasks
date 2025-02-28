@@ -1,6 +1,6 @@
 <?php
 
-include "../../database/connection.php";
+include $_SERVER['DOCUMENT_ROOT']."/tasks/database/connection.php";
 
 $erro = [];
 
@@ -60,10 +60,10 @@ if (isset($_POST['confirm'])) {
 
 
 <!DOCTYPE html>
-<?php include '../../includes/language.php' ?>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/language.php' ?>
 
 <head>
-    <?php include '../../includes/header.php' ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/header.php' ?>
     <title>Cadastro</title>
 </head>
 
@@ -77,7 +77,7 @@ if (isset($_POST['confirm'])) {
         echo "</div>";
     }
     ?>
-    <a href="index.php?p=home">voltar</a>
+    <!-- <a href="<?php $_SERVER['DOCUMENT_ROOT']?>./tasks/index.php?p=home">voltar</a> arrumar bug de voltar -->
     <section class="vh-100 w-100 align-items-center justify-content-center">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
         <form action="" method="POST" class="container d-grid gap-2 col-xl-6 col-lg-6 vh-75">
