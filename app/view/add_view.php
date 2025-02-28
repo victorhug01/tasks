@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<?php include '../../includes/language.php' ?>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/language.php' ?>
 
 <head>
-    <?php include '../../includes/header.php' ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/header.php' ?>
     <title>Add</title>
 </head>
 
 <body>
     <section class="vh-100 w-100 align-items-center justify-content-center">
-        <?php include '../../includes/navbar.php' ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/navbar.php' ?>
         <form action="" method="post" class="container d-grid gap-2 col-xl-6 col-lg-6">
             <div class="form-group d-grid gap-2">
                 <label for="">Título</label>
