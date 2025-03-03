@@ -4,18 +4,18 @@ include $_SERVER['DOCUMENT_ROOT']."/tasks/database/connection.php";
 $erro = [];
 
 if (isset($_POST['confirm'])) {
-    // Verifica se a sessão foi iniciada
+    
     if (!isset($_SESSION)) {
         session_start();
     }
 
-    // Sanitiza os dados
+    
     $name = $mysqli->real_escape_string($_POST['name']);
     $email = $mysqli->real_escape_string($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Validações
+    
     if (strlen($name) == 0) {
         $erro[] = "Preencha o nome.";
     }
@@ -29,9 +29,9 @@ if (isset($_POST['confirm'])) {
         $erro[] = "As senhas não conferem.";
     }
 
-    // Se não houver erros, insere no banco
+    
     if (count($erro) == 0) {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT); // Hash da senha
+        $passwordHash = md5(md5($password)); 
 
         $sql_code = "INSERT INTO users (nome, email, passwrd) VALUES ('$name', '$email', '$passwordHash')";
         $confirm = mysqli_query($mysqli, $sql_code);
