@@ -3,60 +3,48 @@ include $_SERVER['DOCUMENT_ROOT']."/tasks/database/connection.php";
 
 $erro = [];
 
-
 if (isset($_POST['confirm'])) {
+    // Verifica se a sessão foi iniciada
     if (!isset($_SESSION)) {
         session_start();
+    }
 
-        foreach ($_POST as $key => $value) {
-            $_SESSION[$key] = $mysqli->real_escape_string($value);
-        }
+    // Sanitiza os dados
+    $name = $mysqli->real_escape_string($_POST['name']);
+    $email = $mysqli->real_escape_string($_POST['email']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-        if (strlen($_SESSION['name']) == 0) {
-            $erro[] = "Preencha o nome.";
-            echo $erro[] = "Preencha o nome.";
-        }
-        if (substr_count($_SESSION['email'], '@' != 1 || substr_count($_SESSION['email'], '.' < 1))) {
-            $erro[] = "Preencha o email.";
-        }
+    // Validações
+    if (strlen($name) == 0) {
+        $erro[] = "Preencha o nome.";
+    }
+    if (substr_count($email, '@') != 1 || substr_count($email, '.') < 1) {
+        $erro[] = "Preencha o email corretamente.";
+    }
+    if (strlen($password) < 8 || strlen($password) > 16) {
+        $erro[] = "A senha deve ter entre 8 e 16 caracteres.";
+    }
+    if ($password !== $confirm_password) {
+        $erro[] = "As senhas não conferem.";
+    }
 
-        if (strlen($_SESSION['password']) < 2 || strlen($_SESSION['password']) > 16) {
-            $erro[] = "Preencha sua senha.";
-        }
+    // Se não houver erros, insere no banco
+    if (count($erro) == 0) {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT); // Hash da senha
 
-        if (strcmp($_SESSION['password'], $_SESSION['confirm_password']) != 0) {
-            $erro[] = "As senhas não conferem.";
-        }
+        $sql_code = "INSERT INTO users (nome, email, passwrd) VALUES ('$name', '$email', '$passwordHash')";
+        $confirm = mysqli_query($mysqli, $sql_code);
 
-        var_dump(count($erro) == 0);
-        if (count($erro) == 0) {
-
-
-            $password = md5(md5($_SESSION['password']));
-
-            $sql_code = "INSERT INTO users (
-                nome,
-                email,
-                passwrd)
-                VALUES (
-                    '$_SESSION[name]',
-                    '$_SESSION[email]',
-                    '$password'
-                )";
-            $confirm = mysqli_query($mysqli, $sql_code);
-            if ($confirm) {
-                unset($_SESSION["name"], $_SESSION["email"], $_SESSION["password"], $_SESSION["confirm_password"]);
-                echo "<script> location.href='index.php?p=home'; </script>";
-            } else {
-                $erro[] = $confirm;
-            }
+        if ($confirm) {
+            echo "<script> location.href='index.php?p=home'; </script>";
+        } else {
+            $erro[] = "Erro ao cadastrar, tente novamente mais tarde.";
         }
     }
 }
 
-
 ?>
-
 
 <!DOCTYPE html>
 <?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/language.php' ?>
@@ -77,7 +65,7 @@ if (isset($_POST['confirm'])) {
     }
     ?>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
-    <section class="w-100 d-flex align-items-center justify-content-center"  style="height: calc(100vh - 100px);">
+    <section class="w-100 d-flex align-items-center justify-content-center" style="height: calc(100vh - 100px);">
         <form action="" method="POST" class="container d-grid gap-2 col-xl-5 col-lg-5 vh-75">
             <h1 class="mb-4">Cadastre-se</h1>
             <div class="form-grou">
@@ -97,7 +85,7 @@ if (isset($_POST['confirm'])) {
                 <small>A senha deve ter entre 8 e 16 caracteres</small>
             </div>
             <div class="form-group">
-                <label for="exampleInputConfirmPassword2">Senha</label>
+                <label for="exampleInputConfirmPassword2">Confirmar senha</label>
                 <input name="confirm_password" type="password" class="form-control border border-primary" id="exampleInputConfirmPassword2"
                     placeholder="Confirme sua senha" required>
             </div>
