@@ -1,3 +1,6 @@
+<?php 
+?>
+
 <!DOCTYPE html>
 <?php include $_SERVER['DOCUMENT_ROOT'].'/tasks/includes/language.php' ?>
 
@@ -6,6 +9,7 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Home Page</h1>
+    <h1>Bem vindo(a), <?php echo $_SESSION['userEmail'] ?></h1>
+    <h2><a href="index.php?p=logout">Sair</a></h2>
 </body>
 </html>

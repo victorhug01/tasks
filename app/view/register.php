@@ -1,5 +1,4 @@
 <?php
-
 include $_SERVER['DOCUMENT_ROOT']."/tasks/database/connection.php";
 
 $erro = [];
@@ -78,11 +77,11 @@ if (isset($_POST['confirm'])) {
     }
     ?>
     <!-- <a href="<?php $_SERVER['DOCUMENT_ROOT']?>./tasks/index.php?p=home">voltar</a> arrumar bug de voltar -->
-    <section class="vh-100 w-100 align-items-center justify-content-center">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
-        <form action="" method="POST" class="container d-grid gap-2 col-xl-6 col-lg-6 vh-75">
-            <h1>Cadastre-se</h1>
-            <div class="form-group">
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
+    <section class="w-100 d-flex align-items-center justify-content-center"  style="height: calc(100vh - 100px);">
+        <form action="" method="POST" class="container d-grid gap-2 col-xl-5 col-lg-5 vh-75">
+            <h1 class="mb-4">Cadastre-se</h1>
+            <div class="form-grou">
                 <label for="exampleInputName">Nome completo</label>
                 <input name="name" type="text" class="form-control" id="exampleInputName" aria-describedby="NameHelp"
                     placeholder="Digite seu nome" required>
