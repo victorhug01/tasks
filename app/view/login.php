@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Verifica se o formulário foi sub
             if (isset($_SESSION['not_authenticated'])):
             ?>
             <div class="d-flex w-100 align-items-center justify-content-center text-white bg-danger py-3"
-                style="height: auto;">
+                style="height: 6vh;">
                 <?php echo $_SESSION['not_authenticated']; // Exibe a mensagem de erro ?>
             </div>
             <?php
@@ -59,15 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Verifica se o formulário foi sub
             ?>
             <div class="form-group mb-4">
                 <label for="exampleInputEmail1">Email</label>
-                <input name="userEmail" type="email" class="form-control" id="exampleInputEmail1"
+                <input name="userEmail" type="email" class="form-control border border-primary" id="exampleInputEmail1"
                     aria-describedby="emailHelp" placeholder="Digite seu email" required>
             </div>
             <div class="form-group mb-4">
                 <label for="exampleInputPassword1">Senha</label>
-                <input name="userPassword" type="password" class="form-control" id="exampleInputPassword1"
+                <input name="userPassword" type="password" class="form-control border border-primary" id="exampleInputPassword1"
                     placeholder="Digite sua senha" required>
             </div>
             <button name="confirm" type="submit" value="save" class="btn btn-primary">Conectar</button>
+            <a href="index.php?p=register" class="text-center">Não tem uma conta? Cadastre-se.</a>
         </form>
     </section>
 </body>

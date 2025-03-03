@@ -46,7 +46,7 @@ if (isset($_POST['confirm'])) {
             $confirm = mysqli_query($mysqli, $sql_code);
             if ($confirm) {
                 unset($_SESSION["name"], $_SESSION["email"], $_SESSION["password"], $_SESSION["confirm_password"]);
-                echo "<script> location.href='../../index.php?p=home'; </script>";
+                echo "<script> location.href='index.php?p=home'; </script>";
             } else {
                 $erro[] = $confirm;
             }
@@ -76,37 +76,33 @@ if (isset($_POST['confirm'])) {
         echo "</div>";
     }
     ?>
-    <!-- <a href="<?php $_SERVER['DOCUMENT_ROOT']?>./tasks/index.php?p=home">voltar</a> arrumar bug de voltar -->
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
     <section class="w-100 d-flex align-items-center justify-content-center"  style="height: calc(100vh - 100px);">
         <form action="" method="POST" class="container d-grid gap-2 col-xl-5 col-lg-5 vh-75">
             <h1 class="mb-4">Cadastre-se</h1>
             <div class="form-grou">
                 <label for="exampleInputName">Nome completo</label>
-                <input name="name" type="text" class="form-control" id="exampleInputName" aria-describedby="NameHelp"
+                <input name="name" type="text" class="form-control border border-primary" id="exampleInputName" aria-describedby="NameHelp"
                     placeholder="Digite seu nome" required>
-                <p class=space></p>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
-                <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                <input name="email" type="email" class="form-control border border-primary" id="exampleInputEmail1"
                     aria-describedby="emailHelp" placeholder="Digite seu email" required>
-                <p class=space></p>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Senha</label>
-                <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                <input name="password" type="password" class="form-control border border-primary" id="exampleInputPassword1"
                     placeholder="Digite sua senha" required>
                 <small>A senha deve ter entre 8 e 16 caracteres</small>
-                <p class=space></p>
             </div>
             <div class="form-group">
                 <label for="exampleInputConfirmPassword2">Senha</label>
-                <input name="confirm_password" type="password" class="form-control" id="exampleInputConfirmPassword2"
+                <input name="confirm_password" type="password" class="form-control border border-primary" id="exampleInputConfirmPassword2"
                     placeholder="Confirme sua senha" required>
-                <p class=space></p>
             </div>
             <button name="confirm" type="submit" value="save" class="btn btn-primary">Cadastrar</button>
+            <a href="index.php?p=login" class="text-center">Já possui uma conta? Conecte-se.</a>
         </form>
     </section>
 </body>

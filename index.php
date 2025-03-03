@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 if (isset($_GET['p']) && $_GET['p'] === 'logout') {
     session_unset();
     session_destroy();
@@ -17,12 +17,19 @@ if (isset($_GET['p']) && $_GET['p'] === 'logout') {
 </head>
 
 <body>
-    <section class=main>
+    <section class="main">
         <?php
+
         if (isset($_GET['p'])) {
             $page = $_GET['p'] . ".php";
             if (is_file("app/view/$page")) {
-                include "app/view/$page";
+                $protected_pages = ['home', 'add', 'update', 'delete'];
+                if (in_array($_GET['p'], $protected_pages) && !isset($_SESSION['userEmail'])) {
+                    header('Location: index.php?p=login');
+                    exit();
+                } else {
+                    include "app/view/$page";
+                }
             } else {
                 include 'configs/not_found_page.php';
             }
