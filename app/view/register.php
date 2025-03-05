@@ -12,12 +12,12 @@ if (isset($_POST['confirm'])) {
     
     $name = $mysqli->real_escape_string($_POST['name']);
     $email = $mysqli->real_escape_string($_POST['email']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $password = $mysqli->real_escape_string($_POST['password']);
+    $confirm_password = $mysqli->real_escape_string($_POST['confirm_password']);
 
     
     if (strlen($name) == 0) {
-        $erro[] = "Preencha o nome.";
+        $erro[] = "Preencha o nome.";   
     }
     if (substr_count($email, '@') != 1 || substr_count($email, '.') < 1) {
         $erro[] = "Preencha o email corretamente.";

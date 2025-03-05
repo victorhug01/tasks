@@ -21,8 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = mysqli_num_rows($result);
         $userData = mysqli_fetch_assoc($result);
 
-        print_r($userData);
-
         if ($row == 1) {
             $_SESSION['userData'] = $userData;
             header('Location: ./');
