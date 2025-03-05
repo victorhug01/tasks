@@ -1,4 +1,4 @@
-<?php
+<h1?php
 ?>
 
 <!DOCTYPE html>
@@ -11,9 +11,9 @@
 
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
-    <section class="d-grid w-100 align-items-center justify-content-center text-center"
+    <section class="w-100 p-3"
         style="height: calc(100vh - 100px);">
-        <h1>Bem vindo(a), <?php echo $_SESSION['userEmail'] ?></h1>
+        <span>Bem vindo(a), <?php print_r($_SESSION['userData']['nome']);?>.</span>
     </section>
     <button type="button" class="btn btn-primary rounded-circle fw-bold position-absolute bottom-0 end-0 m-3"
         style="height: 50px; width: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"

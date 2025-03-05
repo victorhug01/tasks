@@ -19,9 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query = "SELECT id_user, email, nome FROM users WHERE email = '{$userEmail}' AND passwrd = MD5(MD5('{$userPassword}'))";
         $result = mysqli_query($mysqli, $query);
         $row = mysqli_num_rows($result);
+        $userData = mysqli_fetch_assoc($result);
+
+        print_r($userData);
 
         if ($row == 1) {
-            $_SESSION['userEmail'] = $userEmail;
+            $_SESSION['userData'] = $userData;
             header('Location: ./');
             exit();
         } else {

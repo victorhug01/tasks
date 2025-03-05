@@ -24,7 +24,7 @@ if (isset($_GET['p']) && $_GET['p'] === 'logout') {
             $page = $_GET['p'] . ".php";
             if (is_file("app/view/$page")) {
                 $protected_pages = ['home', 'add', 'update', 'delete'];
-                if (in_array($_GET['p'], $protected_pages) && !isset($_SESSION['userEmail'])) {
+                if (in_array($_GET['p'], $protected_pages) && !isset($_SESSION['userData'])) {
                     header('Location: ./');
                     exit();
                 } else {
@@ -34,7 +34,7 @@ if (isset($_GET['p']) && $_GET['p'] === 'logout') {
                 include 'configs/not_found_page.php';
             }
         } else {
-            if (!isset($_SESSION['userEmail'])) {
+            if (!isset($_SESSION['userData'])) {
                 include 'app/view/login.php';
                 exit();
             } else {
