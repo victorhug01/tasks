@@ -4,7 +4,7 @@ session_start();
 if (isset($_GET['p']) && $_GET['p'] === 'logout') {
     session_unset();
     session_destroy();
-    header('Location: index.php?p=login');
+    header('Location: ./');
     exit();
 }
 ?>
@@ -25,7 +25,7 @@ if (isset($_GET['p']) && $_GET['p'] === 'logout') {
             if (is_file("app/view/$page")) {
                 $protected_pages = ['home', 'add', 'update', 'delete'];
                 if (in_array($_GET['p'], $protected_pages) && !isset($_SESSION['userEmail'])) {
-                    header('Location: index.php?p=login');
+                    header('Location: ./');
                     exit();
                 } else {
                     include "app/view/$page";
