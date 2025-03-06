@@ -30,10 +30,18 @@ if (session_status() == PHP_SESSION_NONE) {
             ?>
             <div class="bg-primary row align-items-center rounded my-1 p-1  ">
                 <div class="col d-flex text-left align-items-center justify-content-start">
-                <img src="<?= htmlspecialchars($fetch['image_product']) ?>" alt="imagem produto" style="height: auto; width: 6vw;" class="rounded">
+                    <?php
+                    if (!empty($fetch['image_product'])) {
+                        $imageData = base64_encode($fetch['image_product']);
+
+                        echo '<img src="data:image/jpeg;base64,' . $imageData . '" alt="imagem produto" style="height: auto; width: 6vw;" class="rounded">';
+                    } else {
+                        echo '<img src="public/images/bag.png" alt="imagem produto" style="height: auto; width: 6vw;" class="rounded">';
+                    }
+                    ?>
                     <div class="px-2 text-left">
                         <h4><?php echo $fetch['title'] ?></h4>
-                        <?php echo ($fetch['descriptions']) == 'on' ? 'Item Opcional' : 'Obrigatório⚠' ?>
+                        <?php echo ($fetch['optional']) == 'on' ? 'Item Opcional' : 'Obrigatório⚠' ?>
                     </div>
                 </div>
                 <div class="col d-grid">
@@ -83,7 +91,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="index.php?p=add" method="POST" class="container">
+                    <form action="index.php?p=add" method="POST" class="container" enctype="multipart/form-data">
                         <div class="form-group d-grid gap-2">
                             <label for="">Título</label>
                             <input type="text" name="title" class="form-control border border-2 border-dark">
