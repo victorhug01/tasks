@@ -1,53 +1,7 @@
 <?php
-
+include $_SERVER['DOCUMENT_ROOT'] . "/tasks/database/connection.php";
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-}
-
-include $_SERVER['DOCUMENT_ROOT'] . '/tasks/database/connection.php';
-
-
-if (isset($_POST['insert'])) {
-
-    $title = mysqli_real_escape_string($mysqli, $_POST['title']);
-    $date = mysqli_real_escape_string($mysqli, $_POST['date']);
-    $time = mysqli_real_escape_string($mysqli, $_POST['time']);
-    $selectOption = mysqli_real_escape_string($mysqli, $_POST['select-option']);
-    $chooseFile = mysqli_real_escape_string($mysqli, $_POST['choose-file']);
-    $description = mysqli_real_escape_string($mysqli, $_POST['description']);
-    $optional = mysqli_real_escape_string($mysqli, $_POST['optional']);
-
-    print_r($_SESSION['userData']['id_user']);
-
-    $queryInsert = "INSERT INTO list(
-            title, 
-            time_shopping, 
-            date_shopping, 
-            descriptions, 
-            image_product,
-            option_size,
-            optional, 
-            fk_id_user) 
-        VALUES (
-            '{$title}',
-            '{$time}',
-            '{$date}',
-            '{$description}',
-            '{$chooseFile}',
-            '{$selectOption}',
-            '{$optional}',
-            '{$_SESSION['userData']['id_user']}'
-        )";
-
-    $resultInsert = mysqli_query($mysqli, $queryInsert) or die(mysqli_error($mysqli));
-
-    $userId = $_SESSION['userData']['id_user'];
-    $querySelect = "SELECT * FROM list WHERE fk_id_user = {$userId}";
-    $resultSelect = mysqli_query($mysqli, $querySelect) or die('Erro na query');
-    $dataList = mysqli_fetch_assoc($resultSelect);
-    $_SESSION['userList'] = $dataList;
-    print_r($_SESSION['userList']);
-
 }
 ?>
 
@@ -64,8 +18,58 @@ if (isset($_POST['insert'])) {
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
     <section class="w-100 p-3" style="height: calc(100vh - 100px);">
         <span>Bem vindo(a), <?php print_r($_SESSION['userData']['nome']); ?>.</span>
-        <span>Bem vindo(a), <?php print_r($_SESSION['userList']); ?>.</span>
-        <!-- <div class="w-100 bg-primary" style="height: 4vh;"></div> -->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <?php
+        $query = $mysqli->query("SELECT * FROM `list` ORDER BY `id_list` ASC");
+        $count = 1;
+        while ($fetch = $query->fetch_array()) {
+            ?>
+            <div class="bg-primary row align-items-center rounded my-1 p-1  ">
+                <div class="col d-flex text-left align-items-center justify-content-start">
+                <img src="<?= htmlspecialchars($fetch['image_product']) ?>" alt="imagem produto" style="height: auto; width: 6vw;" class="rounded">
+                    <div class="px-2 text-left">
+                        <h4><?php echo $fetch['title'] ?></h4>
+                        <?php echo ($fetch['descriptions']) == 'on' ? 'Item Opcional' : 'Obrigatório⚠' ?>
+                    </div>
+                </div>
+                <div class="col d-grid">
+                    <div class="d-grid text-left text-center row">
+                        <h5>Descrição</h5>
+                        <p class="d-inline-block text-truncate col"><?php echo $fetch['descriptions'] ?></p>
+                    </div>
+                </div>
+                <div class="col d-grid">
+                    <div class="d-flex justify-content-around col">
+                        <div class="d-grid justify-content-center text-center row">
+                            <h5>Horário </h5>
+                            <p><?php echo $fetch['time_shopping'] ?></p>
+                        </div>
+                        <div class="d-grid justify-content-center text-center row">
+                            <h5>Data </h5>
+                            <p><?php echo $fetch['date_shopping'] ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <?php
+                    if ($fetch['status'] != "Done") {
+                        echo
+                            '<a href="app/view/update.php?task_id=' . $fetch['id_list'] . '" class="btn btn-success w-25"><span class="glyphicon glyphicon-check">✔</span></a>';
+                    }
+                    ?>
+                    <a href="app/view/delete.php?task_id=<?php echo $fetch['id_list'] ?>" class="btn btn-danger w-25">
+                        <span class="glyphicon glyphicon-remove">❌</span>
+                    </a>
+
+                </div>
+            </div>
+            <?php
+        }
+        ?>
     </section>
     <button type="button" class="btn btn-primary rounded-circle fw-bold position-absolute bottom-0 end-0 m-3"
         style="height: 50px; width: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -79,7 +83,7 @@ if (isset($_POST['insert'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="container ">
+                    <form action="index.php?p=add" method="POST" class="container">
                         <div class="form-group d-grid gap-2">
                             <label for="">Título</label>
                             <input type="text" name="title" class="form-control border border-2 border-dark">
@@ -109,7 +113,7 @@ if (isset($_POST['insert'])) {
                             <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
                             <textarea name="description" class="form-control border border-2 border-dark"
                                 id="exampleFormControlTextarea1" style="resize:none;"
-                                placeholder="Maximo de 500 palavras" maxlength="500" rows="5">
+                                placeholder="Maximo de 10 palavras" maxlength="500" rows="5">
                             </textarea>
                         </div>
                         <div class="form-check">
@@ -121,7 +125,7 @@ if (isset($_POST['insert'])) {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" name="insert" data-bs-dismiss="modal"
+                            <button type="submit" name="add" data-bs-dismiss="modal"
                                 class="btn btn-primary">Adicionar</button>
                         </div>
                     </form>
