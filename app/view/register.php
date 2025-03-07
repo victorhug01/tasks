@@ -84,7 +84,7 @@ if (isset($_POST['confirm'])) {
                     placeholder="Digite sua senha" required>
                 <small>A senha deve ter entre 8 e 16 caracteres</small>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-5">
                 <label for="exampleInputConfirmPassword2">Confirmar senha</label>
                 <input name="confirm_password" type="password" class="form-control border border-primary" id="exampleInputConfirmPassword2"
                     placeholder="Confirme sua senha" required>

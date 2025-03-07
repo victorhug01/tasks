@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input name="userEmail" type="email" class="form-control border border-primary" id="exampleInputEmail1"
                     aria-describedby="emailHelp" placeholder="Digite seu email" required>
             </div>
-            <div class="form-group mb-4">
+            <div class="form-group mb-5">
                 <label for="exampleInputPassword1">Senha</label>
                 <input name="userPassword" type="password" class="form-control border border-primary"
                     id="exampleInputPassword1" placeholder="Digite sua senha" required>

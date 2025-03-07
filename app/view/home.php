@@ -17,14 +17,20 @@ if (session_status() == PHP_SESSION_NONE) {
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
     <section class="w-100 p-3" style="height: calc(100vh - 100px);">
-        <div style="padding-bottom: 5vh;">Bem vindo(a), <?php print_r($_SESSION['userData']['nome']); ?>.</div>
-        <div class="row d-flex justify-content-center d-flex flex-sm-wrap p-2">
+        <div style="padding-bottom: 5vh;">Bem vindo(a), 
+            <?php 
+                $name = explode(" ",  $_SESSION['userData']['nome'] );
+                print_r("<strong>".$name[0]." ". $name[1]."</strong>"); 
+            ?>.
+        </div>
+        <div class="row d-flex justify-content-start d-flex flex-sm-wrap p-2">
             <?php
             $query = $mysqli->query("SELECT * FROM `list` WHERE fk_id_user = {$_SESSION['userData']['id_user']}");
             $count = 1;
             while ($fetch = $query->fetch_array()) {
-            ?>
-                <div class="col-12 col-xxl-12 col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12  d-flex justify-content-center">
+                ?>
+                <div
+                    class="col-12 col-xxl-12 col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12  d-flex justify-content-center">
                     <div class="card" style="width: 18rem;">
                         <?php
                         if (!empty($fetch['image_product'])) {
@@ -34,34 +40,35 @@ if (session_status() == PHP_SESSION_NONE) {
                             echo '<img src="public/images/bag.png" alt="imagem produto" class="rounded card-img-top">';
                         }
                         ?>
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $fetch['descriptions'] ?></h5>
+                        <div class="card-body"
+                            style="height: 15vh;">
+                            <h6 class="card-title" style="overflow: hidden; text-overflow: clip ellipsis; white-space: nowrap;"><?php echo $fetch['descriptions'] ?></h6>
                             <p class="card-text"><?php echo $fetch['descriptions'] ?></p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <h5>Horário </h5>
+                        <ul class="card-body w-100 d-flex align-items-center" style="height:20vh;">
+                            <li class="list-group-item text-center w-100">
+                                <h6>Horário </h6>
                                 <p><?php echo $fetch['time_shopping'] ?></p>
                             </li>
-                            <li class="list-group-item">
-                                <h5>Data </h5>
+                            <li class="list-group-item text-center w-100">
+                                <h6>Data </h6>
                                 <p><?php echo $fetch['date_shopping'] ?></p>
                             </li>
-                            <li class="list-group-item">
-                                <h5>Tamanho</h5>
+                            <li class=" list-group-item text-center w-100">
+                                <h6>Tamanho</h6>
                                 <p><?php echo $fetch['option_size'] ?></p>
                             </li>
                         </ul>
-                        <div class="card-body w-100 justify-content-center">
+                        <div class=" d-flex p-3 gap-3">
                             <?php
                             if ($fetch['status'] != "Done") {
                                 echo
-                                    '<a href="app/view/update.php?task_id=' . $fetch['id_list'] . '" class="btn btn-success"><span class="glyphicon glyphicon-check">✔</span></a>';
+                                    '<a href="app/view/update.php?task_id=' . $fetch['id_list'] . '" class="btn btn-success w-100"><span class="glyphicon glyphicon-check">✔</span></a>';
                             }
                             ?>
                             <a href="app/view/delete.php?task_id=<?php echo $fetch['id_list'] ?>"
-                                class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove w-100">❌</span>
+                                class="btn btn-danger w-100">
+                                <span class="glyphicon glyphicon-remove">❌</span>
                             </a>
                         </div>
                     </div>
@@ -72,22 +79,24 @@ if (session_status() == PHP_SESSION_NONE) {
             ?>
         </div>
         <button type="button" class="btn btn-primary rounded-circle fw-bold position-fixed bottom-0 end-0 m-3"
-        style="height: 50px; width: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
-        data-bs-whatever="@mdo">+</button>
+            style="height: 50px; width: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo">+</button>
     </section>
-    
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Adicionar item</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>  
+                </div>
                 <div class="modal-body">
                     <form action="index.php?p=add" method="POST" class="container" enctype="multipart/form-data">
                         <div class="form-group d-grid gap-2">
                             <label for="">Título</label>
-                            <input type="text" name="title" pattern="^[a-zA-Z0-9]+$" title="Apenas letras e números são permitidos" class="form-control border border-2 border-dark" required>
+                            <input type="text" name="title" pattern="^[a-zA-Z0-9]+$"
+                                title="Apenas letras e números são permitidos"
+                                class="form-control border border-2 border-dark" required>
                         </div>
                         <div class="form-group d-grid gap-2">
                             <label for="">Hora</label>
@@ -101,10 +110,10 @@ if (session_status() == PHP_SESSION_NONE) {
                             <label for=""></label>
                             <select class="form-select d-grid gap-2 border border-2 border-dark" name="select-option">
                                 <option selected>Selecione uma opção</option>
-                                <option value="1">Pequeno</option>
-                                <option value="2">Médio</option>
-                                <option value="3">Grande</option>
-                                <option value="3">Extra Grande</option>
+                                <option value="Pequeno">Pequeno</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Grande">Grande</option>
+                                <option value="Extra Grande">Extra Grande</option>
                             </select>
                         </div>
                         <div class="form-group d-grid gap-2 mb-3 py-3">
@@ -112,10 +121,12 @@ if (session_status() == PHP_SESSION_NONE) {
                                 id="formFileSm" accept="image/png, image/jpeg" type="file">
                         </div>
                         <div class="form-group d-grid gap-2 mb-3">
-                            <label for="exampleFormControlTextarea1" pattern="^[a-zA-Z0-9]+$" title="Apenas letras e números são permitidos" class="form-label">Descrição</label>
+                            <label for="exampleFormControlTextarea1" pattern="^[a-zA-Z0-9]+$"
+                                title="Apenas letras e números são permitidos" class="form-label">Descrição</label>
                             <textarea name="description" class="form-control border border-2 border-dark"
                                 id="exampleFormControlTextarea1" style="resize:none;"
-                                placeholder="Maximo de 10 palavras" maxlength="500" rows="5" value="0" required></textarea>
+                                placeholder="Maximo de 10 palavras" maxlength="60" rows="5" value="0"
+                                required></textarea>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input border border-2 border-dark" name="optional" type="checkbox"
