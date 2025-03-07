@@ -87,7 +87,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <form action="index.php?p=add" method="POST" class="container" enctype="multipart/form-data">
                         <div class="form-group d-grid gap-2">
                             <label for="">Título</label>
-                            <input type="text" name="title" class="form-control border border-2 border-dark" required>
+                            <input type="text" name="title" pattern="^[a-zA-Z0-9]+$" title="Apenas letras e números são permitidos" class="form-control border border-2 border-dark" required>
                         </div>
                         <div class="form-group d-grid gap-2">
                             <label for="">Hora</label>
@@ -109,10 +109,10 @@ if (session_status() == PHP_SESSION_NONE) {
                         </div>
                         <div class="form-group d-grid gap-2 mb-3 py-3">
                             <input name="choose-file" class="form-control form-control-sm border border-2 border-dark"
-                                id="formFileSm" type="file">
+                                id="formFileSm" accept="image/png, image/jpeg" type="file">
                         </div>
                         <div class="form-group d-grid gap-2 mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
+                            <label for="exampleFormControlTextarea1" pattern="^[a-zA-Z0-9]+$" title="Apenas letras e números são permitidos" class="form-label">Descrição</label>
                             <textarea name="description" class="form-control border border-2 border-dark"
                                 id="exampleFormControlTextarea1" style="resize:none;"
                                 placeholder="Maximo de 10 palavras" maxlength="500" rows="5" value="0" required></textarea>
