@@ -1,6 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/tasks/database/connection.php';
 
+
 if (isset($_POST['add'])) {
     if ($_POST['title'] != "" && $_POST['description'] != "") {
         $title = mysqli_real_escape_string($mysqli, $_POST['title']);
@@ -9,6 +10,7 @@ if (isset($_POST['add'])) {
         $selectOption = mysqli_real_escape_string($mysqli, $_POST['select-option']);
         $chooseFile = 'choose-file'; // Nome do campo do arquivo no formulário
         $image = $_FILES[$chooseFile];
+        
         
         if ($image['error'] == 0): // Verifica se o arquivo foi enviado corretamente
             $nomeFinal = time() . '.jpg'; // Define o nome final do arquivo
@@ -58,6 +60,10 @@ if (isset($_POST['add'])) {
         else:
             echo "Você não fez o upload da imagem corretamente.";
         endif;
+    }else{
+        header('Location: ./');
+        echo "Preencha o titulo e descrição";
+        exit;
     }
 }
 ?>
