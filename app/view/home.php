@@ -11,16 +11,17 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <head>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/header.php' ?>
+    <script src="javascript/home.js"></script>
     <title>Home</title>
 </head>
 
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/tasks/includes/navbar.php' ?>
     <section class="w-100 p-3" style="height: calc(100vh - 100px);">
-        <div style="padding-bottom: 5vh;">Bem vindo(a), 
-            <?php 
-                $name = explode(" ",  $_SESSION['userData']['nome'] );
-                print_r("<strong>".$name[0]." ". $name[1]."</strong>"); 
+        <div style="padding-bottom: 5vh;">Bem vindo(a),
+            <?php
+            $name = explode(" ", $_SESSION['userData']['nome']);
+            print_r("<strong>" . $name[0] . " " . $name[1] . "</strong>");
             ?>.
         </div>
         <div class="row d-flex justify-content-start d-flex flex-sm-wrap p-2">
@@ -40,9 +41,11 @@ if (session_status() == PHP_SESSION_NONE) {
                             echo '<img src="public/images/bag.png" alt="imagem produto" class="rounded card-img-top">';
                         }
                         ?>
-                        <div class="card-body"
-                            style="height: 15vh;">
-                            <h6 class="card-title" style="overflow: hidden; text-overflow: clip ellipsis; white-space: nowrap;"><?php echo $fetch['descriptions'] ?></h6>
+                        <div class="card-body" style="height: 15vh;">
+                            <h6 class="card-title"
+                                style="overflow: hidden; text-overflow: clip ellipsis; white-space: nowrap;">
+                                <?php echo $fetch['descriptions'] ?>
+                            </h6>
                             <p class="card-text"><?php echo $fetch['descriptions'] ?></p>
                         </div>
                         <ul class="card-body w-100 d-flex align-items-center" style="height:20vh;">
@@ -62,11 +65,11 @@ if (session_status() == PHP_SESSION_NONE) {
                         <div class=" d-flex p-3 gap-3">
                             <?php
                             if ($fetch['status'] != "Done") {
-                                echo
-                                    '<a href="app/view/update.php?task_id=' . $fetch['id_list'] . '" class="btn btn-success w-100"><span class="glyphicon glyphicon-check">✔</span></a>';
+
+                                echo '<a href="javascript:markList(' . $fetch['id_list'] .')'. '" class="btn btn-success w-100"><span class="glyphicon glyphicon-check">✔</span></a>';
                             }
                             ?>
-                            <a href="app/view/delete.php?task_id=<?php echo $fetch['id_list'] ?>"
+                            <a href="javascript:removeList(<?php echo $fetch['id_list'] ?>)"
                                 class="btn btn-danger w-100">
                                 <span class="glyphicon glyphicon-remove">❌</span>
                             </a>
@@ -83,15 +86,14 @@ if (session_status() == PHP_SESSION_NONE) {
             data-bs-whatever="@mdo">+</button>
     </section>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Adicionar item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="index.php?p=add" method="POST" class="container" enctype="multipart/form-data">
+                    <form action="index.php?p=add" method="POST" class="container" enctype="multipart/form-data" id="formPost">
                         <div class="form-group d-grid gap-2">
                             <label for="">Título</label>
                             <input type="text" name="title" pattern="^[a-zA-Z0-9]+$"
@@ -104,12 +106,12 @@ if (session_status() == PHP_SESSION_NONE) {
                         </div>
                         <div class="form-group d-grid gap-2">
                             <label for="">Data</label>
-                            <input type="date" name="date" class="form-control border border-2 border-dark">
+                            <input type="date" name="date" class="form-control border border-2 border-dark" min="<?= date('Y-m-d'); ?>">
                         </div>
                         <div class="form-group d-grid gap-2">
                             <label for=""></label>
                             <select class="form-select d-grid gap-2 border border-2 border-dark" name="select-option">
-                                <option selected>Selecione uma opção</option>
+                                <option selected value="">Selecione uma opção</option>
                                 <option value="Pequeno">Pequeno</option>
                                 <option value="Médio">Médio</option>
                                 <option value="Grande">Grande</option>
@@ -118,7 +120,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         </div>
                         <div class="form-group d-grid gap-2 mb-3 py-3">
                             <input name="choose-file" class="form-control form-control-sm border border-2 border-dark"
-                                id="formFileSm" accept="image/png, image/jpeg" type="file">
+                                id="formFileSm" accept="image/png, image/jpeg" type="file" required>
                         </div>
                         <div class="form-group d-grid gap-2 mb-3">
                             <label for="exampleFormControlTextarea1" pattern="^[a-zA-Z0-9]+$"
@@ -136,12 +138,11 @@ if (session_status() == PHP_SESSION_NONE) {
                             </label>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" name="add" class="btn btn-primary">Adicionar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeAndClear()">Fechar</button>
+                            <button type="button" class="btn btn-primary" onclick="swalAdd()">Adicionar</button>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

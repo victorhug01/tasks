@@ -34,18 +34,6 @@ if (isset($_GET['p']) && $_GET['p'] === 'logout') {
                 include 'configs/not_found_page.php';
             }
 
-            // if (is_file("app/view/$page")) {
-            //     $protected_pages = ['home', 'add', 'update', 'delete'];
-            //     if (in_array($_GET['task_id'], $protected_pages) && !isset($_SESSION['userData'])) {
-            //         header('Location: ./');
-            //         exit();
-            //     } else {
-            //         include "app/view/$page";
-            //     }
-            // } else {
-            //     include 'configs/not_found_page.php';
-            // }
-
         } else {
             if (!isset($_SESSION['userData'])) {
                 include 'app/view/login.php';

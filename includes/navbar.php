@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </a>    
 
     <?php if (isset($_SESSION['userData'])):?>
-        <a href="index.php?p=logout"><img src="https://cdn-icons-png.flaticon.com/128/1286/1286853.png" alt="" style="height: 20px"></a>
+        <a href="javascript:exitAccount()"><img src="https://cdn-icons-png.flaticon.com/128/1286/1286853.png" alt="" style="height: 20px"></a>
     <?php endif; ?>
+    <script src="javascript/home.js"></script>
 </nav>

@@ -1,8 +1,7 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/tasks/database/connection.php';
 
-
-if (isset($_POST['add'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_POST['title'] != "" && $_POST['description'] != "") {
         $title = mysqli_real_escape_string($mysqli, $_POST['title']);
         $date = mysqli_real_escape_string($mysqli, $_POST['date']);
